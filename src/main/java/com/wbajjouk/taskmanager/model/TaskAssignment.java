@@ -1,7 +1,7 @@
 package com.wbajjouk.taskmanager.model;
 
-import com.wbajjouk.taskmanager.model.Task;
-import com.wbajjouk.taskmanager.model.User;
+import com.wbajjouk.taskmanager.usermanagement.User;
+import com.wbajjouk.taskmanager.taskmanagement.Task;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -36,5 +36,35 @@ public class TaskAssignment {
         this.assignedDate = assignedDate;
     }
 
+    public Long getAssignmentId() {
+        return assignmentId;
+    }
 
+    public void setAssignmentId(Long assignmentId) {
+        this.assignmentId = assignmentId;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Date getAssignedDate() {
+        return assignedDate;
+    }
+
+    public void setAssignedDate(Date assignedDate) {
+        this.assignedDate = assignedDate;
+    }
 }
