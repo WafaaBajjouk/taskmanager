@@ -1,4 +1,4 @@
-package com.wbajjouk.taskmanager.model;
+package com.wbajjouk.taskmanager.assignmentmanagement;
 
 import com.wbajjouk.taskmanager.usermanagement.User;
 import com.wbajjouk.taskmanager.taskmanagement.Task;
@@ -16,6 +16,7 @@ public class TaskAssignment {
     private Long assignmentId;
 
     @ManyToOne()
+    //many assignment could be associated iwth one task
     @JoinColumn(name = "task_id", nullable = false)
     private Task task;
 

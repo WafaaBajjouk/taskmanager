@@ -1,6 +1,6 @@
 package com.wbajjouk.taskmanager.taskmanagement;
 
-import com.wbajjouk.taskmanager.model.Project;
+import com.wbajjouk.taskmanager.projectmanagement.Project;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -30,8 +30,8 @@ public class Task {
     private String priority ;
 
     @ManyToOne
-//    @ManyToOne(fetch = FetchType.LAZY) // THISSS tells JPA to load the associated entity lazily,Specifies that fetching of
-//    // the associated the entity task should be deferred until it's explicitly accessed.
+
+    // many instances task can be associated with one instance of the Project entity.
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
