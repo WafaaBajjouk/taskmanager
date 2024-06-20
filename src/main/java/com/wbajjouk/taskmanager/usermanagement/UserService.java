@@ -19,8 +19,7 @@ public class UserService {
     }
 
     public List<UserResponse> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        return userMapper.usersToUserResponses(users);
+        return userRepository.findAll().stream().map(userMapper::userToUserResponse).toList();
     }
 
     public Optional<UserResponse> getUserById(Long id) {
@@ -29,8 +28,8 @@ public class UserService {
         return user.map(userMapper::userToUserResponse);
     }
 
-    public UserResponse saveUser(UserResponse userResponse) {
-        User user = userMapper.userResponseToUser(userResponse);
+    public UserResponse saveUser(UserRequest userRqt) {
+        User user = userMapper.userResponseToUser(userRqt);
         User savedUser = userRepository.save(user);
         return userMapper.userToUserResponse(savedUser);
     }

@@ -24,13 +24,15 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
+        // @PathVariable annotation is used to handle template variables in the request URI mapping, and set them as method parameters.
         Optional<UserResponse> userResponse = userService.getUserById(id);
         return userResponse.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> createUser(@RequestBody UserResponse userResponse) {
-        UserResponse savedUserResponse = userService.saveUser(userResponse);
+    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userrqt) {
+        // @RequestBody annotation maps the HttpRequest body to a transfer or domain object, enabling automatic deserialization
+        UserResponse savedUserResponse = userService.saveUser(userrqt);
         return ResponseEntity.ok(savedUserResponse);
     }
 

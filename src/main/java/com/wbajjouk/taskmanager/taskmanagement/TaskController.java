@@ -10,28 +10,22 @@ import java.util.Optional;
 @RequestMapping("/api/tasks")
 public class TaskController {
 
-
-    // diff between and what is the best to use :
-    // 1 - Use INterface repository then do impl --> in service then map -->with url in controllers like the method get all tasks
-    //2 - Use directly the repository in the controller while mapping the bis logic with with url like the method save and dinfbyId
     private final TaskService taskService;
-    private final TaskRepository taskRepository;
 
-    public TaskController(TaskService taskService, TaskRepository taskRepository) {
+    public TaskController(TaskService taskService) {
         this.taskService = taskService;
-        this.taskRepository = taskRepository;
     }
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        Task savedTask = taskRepository.save(task);
+    public ResponseEntity<TaskResponse> createTask(@RequestBody TaskRequest taskRequest) {
+        TaskResponse savedTask = taskService.saveTask(taskRequest);
         return ResponseEntity.ok(savedTask);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
-        Optional<Task> task = taskRepository.findById(id);
-        return task.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<TaskResponse> getTaskById(@PathVariable Long id) {
+        Optional<TaskResponse> taskResponse = taskService.getTaskById(id);
+        return taskResponse.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping
@@ -39,5 +33,9 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+        taskService.deleteTask(id);
+        return ResponseEntity.noContent().build();
+    }
 }

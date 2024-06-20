@@ -24,10 +24,10 @@ public class Task {
     private Date dueDate;
 
     @Column(name = "status", length = 50, nullable = false)
-    private String status = "to-do";
+    private String status ;
 
     @Column(name = "priority", length = 50, nullable = false)
-    private String priority = "medium";
+    private String priority ;
 
     @ManyToOne
 //    @ManyToOne(fetch = FetchType.LAZY) // THISSS tells JPA to load the associated entity lazily,Specifies that fetching of

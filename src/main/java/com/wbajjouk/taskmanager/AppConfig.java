@@ -13,16 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 public class AppConfig {
 
-    // Define beans for services
-    @Bean
-    public UserService userService(UserRepository userRepository) {
-        return new UserService(userRepository);
-    }
 
-    @Bean
-    public TaskService taskService(TaskRepository taskRepository) {
-        return new TaskService(taskRepository);
-    }
 
 }
 

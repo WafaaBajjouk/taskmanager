@@ -1,6 +1,5 @@
 package com.wbajjouk.taskmanager.taskmanagement;
 
-
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,8 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public TaskResponse saveTask(Task task) {
+    public TaskResponse saveTask(TaskRequest taskRequest) {
+        Task task = mapper.taskRequestToTask(taskRequest);
         Task savedTask = taskRepository.save(task);
         return mapper.taskToTaskResponse(savedTask);
     }
