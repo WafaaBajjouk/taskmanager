@@ -6,24 +6,24 @@ import com.wbajjouk.taskmanager.usermanagement.UserResponse;
 import java.util.Date;
 
 public class AssignmentRequest {
-    private UserResponse user;
-    private TaskResponse task;
+    private Long userId;
+    private Long taskId;
     private Date assignedDate;
 
-    public UserResponse getUser() {
-        return user;
+    public Long getTaskId() {
+        return taskId;
     }
 
-    public void setUser(UserResponse user) {
-        this.user = user;
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
     }
 
-    public TaskResponse getTask() {
-        return task;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setTask(TaskResponse task) {
-        this.task = task;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Date getAssignedDate() {

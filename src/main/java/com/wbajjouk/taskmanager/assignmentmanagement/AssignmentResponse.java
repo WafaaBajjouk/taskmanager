@@ -5,6 +5,7 @@ import com.wbajjouk.taskmanager.usermanagement.UserResponse;
 
 import java.util.Date;
 
+
 public class AssignmentResponse {
 
     private Long assignmentId;

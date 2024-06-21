@@ -2,6 +2,7 @@ package com.wbajjouk.taskmanager.assignmentmanagement;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
@@ -11,4 +12,10 @@ public interface AssignmentMapper {
 
     AssignmentResponse assignmentToAssignmentResponse(TaskAssignment assignment);
     TaskAssignment assignmentRequestToAssignment(AssignmentRequest assignmentRequest);
+
+    //@Mapping(source=".", target = "residence")
+   // AssignmentController.PersonResponse personToPersonResponse(AssignmentController.Person person);
+//    void updateAssignmentFromRequest(AssignmentRequest request,  TaskAssignment task);
+
 }
+

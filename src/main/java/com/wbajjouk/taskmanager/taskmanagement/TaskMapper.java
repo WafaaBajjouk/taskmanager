@@ -6,7 +6,6 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface TaskMapper {
 
-    TaskMapper INSTANCE = Mappers.getMapper(TaskMapper.class);
 
     TaskResponse taskToTaskResponse(Task task);
 

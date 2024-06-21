@@ -2,7 +2,8 @@ package com.wbajjouk.taskmanager.projectmanagement;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.*;
+import java.time.temporal.TemporalAmount;
 
 @Entity
 @Table(name = "Projects")
@@ -21,17 +22,17 @@ Project {
     private String description;
 
     @Column(name = "start_date")
-    private Date startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date")
-    private Date endDate;
+    private LocalDate endDate;
 
     // Constructors, getters, and setters
 
     public Project() {
     }
 
-    public Project(String projectName, String description, Date startDate, Date endDate) {
+    public Project(String projectName, String description, LocalDate startDate, LocalDate endDate) {
         this.projectName = projectName;
         this.description = description;
         this.startDate = startDate;
@@ -62,19 +63,34 @@ Project {
         this.description = description;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
+
+    public Duration calculateRemainingTime() {
+        Instant begin = this.startDate.atTime(LocalTime.MIDNIGHT).atZone(ZoneId.of("Europe/Rome")).toInstant();
+        Instant end = this.endDate.atTime(LocalTime.MIDNIGHT).atZone(ZoneId.of("Europe/Rome")).toInstant();
+        Instant now = Instant.now();
+
+        if (begin.isAfter(now)) {
+            throw new RuntimeException("Not started yet");
+        }
+        if (end.isBefore(now)) {
+            throw new RuntimeException("Already finished");
+        }
+        return Duration.between(now, end);
+    }
+
 }

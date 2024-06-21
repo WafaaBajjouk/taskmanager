@@ -1,5 +1,7 @@
 package com.wbajjouk.taskmanager.projectmanagement;
 
+import com.wbajjouk.taskmanager.usermanagement.User;
+import com.wbajjouk.taskmanager.usermanagement.UserMapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,7 @@ import java.util.stream.Collectors;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final ProjectMapper mapper = Mappers.getMapper(ProjectMapper.class);
+    private final ProjectMapper projectmapper = Mappers.getMapper(ProjectMapper.class);
 
     @Autowired
     public ProjectService(ProjectRepository projectRepository) {
@@ -22,20 +24,23 @@ public class ProjectService {
     }
 
     public ProjectResponse saveProject(ProjectRequest projectRequest) {
-        Project project = mapper.projectRequestToProject(projectRequest);
+        Project project = projectmapper.projectRequestToProject(projectRequest);
         Project savedProject = projectRepository.save(project);
-        return mapper.projectToProjectResponse(savedProject);
+        return projectmapper.projectToProjectResponse(savedProject);
     }
 
     public Optional<ProjectResponse> getProjectById(Long id) {
-        return projectRepository.findById(id).map(mapper::projectToProjectResponse);
+        return projectRepository.findById(id).map(projectmapper::projectToProjectResponse);
     }
 
     public List<ProjectResponse> getAllProjects() {
-        return projectRepository.findAll().stream().map(mapper::projectToProjectResponse).collect(Collectors.toList());
+        return projectRepository.findAll().stream().map(projectmapper::projectToProjectResponse).collect(Collectors.toList());
     }
 
     public void deleteProject(Long id) {
         projectRepository.deleteById(id);
     }
+
+
+
 }
