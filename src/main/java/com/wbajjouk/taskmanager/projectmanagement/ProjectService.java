@@ -41,6 +41,10 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
+    public List<ProjectResponse> getCompletedProjects() {
+        return projectRepository.findByProjectCompleteTrue().stream()
+                .map(projectmapper::projectToProjectResponse).collect(Collectors.toList());
+    }
 
 
 }

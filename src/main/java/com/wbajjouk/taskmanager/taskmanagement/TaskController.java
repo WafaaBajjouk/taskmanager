@@ -21,21 +21,54 @@ public class TaskController {
         TaskResponse savedTask = taskService.saveTask(taskRequest);
         return ResponseEntity.ok(savedTask);
     }
-
+    // get all tasks
+    @GetMapping
+    public List<TaskResponse> getAllTasks() {
+        return taskService.getAllTasks();
+    }
+    // get task by ID
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponse> getTaskById(@PathVariable Long id) {
         Optional<TaskResponse> taskResponse = taskService.getTaskById(id);
         return taskResponse.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping
-    public List<TaskResponse> getAllTasks() {
-        return taskService.getAllTasks();
+    //get task by priority
+    @GetMapping("/priority/{priority}")
+    public ResponseEntity<List<TaskResponse>> getTasksByPriority(@PathVariable String priority) {
+        List<TaskResponse> taskResponses = taskService.findTaskByPriority(priority);
+        return ResponseEntity.ok(taskResponses);
     }
+
+    //GET TASK BY PROJECT ID
+    @GetMapping("/project/{projectId}")
+    public ResponseEntity<List<TaskResponse>> getTasksbyProjectId( @PathVariable long projectId) {
+        Optional<List<TaskResponse>> taskResponse = taskService.getTasksByProjectId(projectId);
+        return taskResponse.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
+
+    }
+
+    //GET TASK BY STATUS
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<TaskResponse>> getTasksByStatus(@PathVariable String status) {
+        List<TaskResponse>  taskResponses  = taskService.findTasksByStatus(status);
+        return ResponseEntity.ok(taskResponses);
+    }
+
+
+    //Mark a Task As Completed
+    @PutMapping("/{id}")
+    public TaskResponse markAsCompleted(@PathVariable long id) {
+        return taskService.markTaskAsCompleted(id);
+
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
     }
+
+
 }

@@ -27,16 +27,26 @@ Project {
     @Column(name = "end_date")
     private LocalDate endDate;
 
+    @Column(name = "project_complete")
+    private boolean projectComplete;
+
+    @Column(name = "project_progress_percent")
+    private int project_progress;
+
+
+
     // Constructors, getters, and setters
 
     public Project() {
     }
 
-    public Project(String projectName, String description, LocalDate startDate, LocalDate endDate) {
+    public Project(String projectName, String description, LocalDate startDate, LocalDate endDate,boolean projectComplete, int project_progress) {
         this.projectName = projectName;
+        this.projectComplete=projectComplete;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.project_progress=project_progress;
     }
 
     public Long getProjectId() {
@@ -77,6 +87,22 @@ Project {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public boolean isProjectComplete() {
+        return projectComplete;
+    }
+
+    public void setProjectComplete(boolean projectComplete) {
+        this.projectComplete = projectComplete;
+    }
+
+    public int getProject_progress() {
+        return project_progress;
+    }
+
+    public void setProject_progress(int project_progress) {
+        this.project_progress = project_progress;
     }
 
     public Duration calculateRemainingTime() {

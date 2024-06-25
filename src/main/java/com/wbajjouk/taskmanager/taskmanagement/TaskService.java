@@ -1,41 +1,24 @@
 package com.wbajjouk.taskmanager.taskmanagement;
 
-import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-@Transactional
-@Service
-public class TaskService {
+public interface TaskService {
+    // Open transaction and jpa session
+    TaskResponse saveTask(TaskRequest taskRequest);
 
-    private final TaskRepository taskRepository;
-    private final TaskMapper mapper = Mappers.getMapper(TaskMapper.class);
+    Optional<TaskResponse> getTaskById(Long id);
 
-    @Autowired
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
+    List<TaskResponse> findTaskByPriority(String priority);
 
-    public TaskResponse saveTask(TaskRequest taskRequest) {
-        Task task = mapper.taskRequestToTask(taskRequest);
-        Task savedTask = taskRepository.save(task);
-        return mapper.taskToTaskResponse(savedTask);
-    }
+    List<TaskResponse> getAllTasks();
 
-    public Optional<TaskResponse> getTaskById(Long id) {
-        return taskRepository.findById(id).map(mapper::taskToTaskResponse);
-    }
+    void deleteTask(Long id);
 
-    public List<TaskResponse> getAllTasks() {
-        return taskRepository.findAll().stream().map(mapper::taskToTaskResponse).collect(Collectors.toList());
-    }
 
-    public void deleteTask(Long id) {
-        taskRepository.deleteById(id);
-    }
+    Optional<List<TaskResponse>> getTasksByProjectId(long projectId);
+
+    List<TaskResponse> findTasksByStatus(String status);
+
+    TaskResponse markTaskAsCompleted(long id);
 }

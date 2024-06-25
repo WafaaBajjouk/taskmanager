@@ -29,9 +29,8 @@ public class Task {
     @Column(name = "priority", length = 50, nullable = false)
     private String priority ;
 
-    @ManyToOne
-
     // many instances task can be associated with one instance of the Project entity.
+    @ManyToOne
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
@@ -39,12 +38,13 @@ public class Task {
     public Task() {
     }
 
-    public Task(String taskName, String description, Date dueDate, String status, String priority, Project project) {
+    public Task(String priority, Long taskId, String taskName, String description, Date dueDate, String status, Project project) {
+        this.priority = priority;
+        this.taskId = taskId;
         this.taskName = taskName;
         this.description = description;
         this.dueDate = dueDate;
         this.status = status;
-        this.priority = priority;
         this.project = project;
     }
 

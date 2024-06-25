@@ -11,6 +11,8 @@ public class TaskResponse {
     private Date dueDate;
     private String status;
     private String priority;
+    private int project_id;
+
 
     public Long getTaskId() {
         return taskId;
@@ -58,5 +60,13 @@ public class TaskResponse {
 
     public void setPriority(String priority) {
         this.priority = priority;
+    }
+
+    public int getProject_id() {
+        return project_id;
+    }
+
+    public void setProject_id(int project_id) {
+        this.project_id = project_id;
     }
 }

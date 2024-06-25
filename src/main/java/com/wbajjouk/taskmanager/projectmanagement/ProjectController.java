@@ -33,6 +33,13 @@ public class ProjectController {
         return projectService.getAllProjects();
     }
 
+    @GetMapping("/completed")
+   public List<ProjectResponse> getCompletedProjects() {
+        return projectService.getCompletedProjects();
+    }
+
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
         projectService.deleteProject(id);
