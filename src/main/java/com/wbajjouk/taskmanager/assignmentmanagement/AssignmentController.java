@@ -22,6 +22,23 @@ public class AssignmentController {
         this.assignmentService = assignmentService;
     }
 
+    @GetMapping
+    public List<AssignmentResponse> getAllAssignments() {
+        return assignmentService.getAllAssignments();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AssignmentResponse> getAssignmentById(@PathVariable Long id) {
+        Optional<AssignmentResponse> assignmentResponse = assignmentService.getAssignmentById(id);
+        return assignmentResponse.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/tasks/{taskId}")
+    public ResponseEntity<List<AssignmentResponse>> getAssignmentByTaskId(@PathVariable Long taskId) {
+        Optional<List<AssignmentResponse>> assignmentResponse = assignmentService.getAssignmentByTaskId(taskId);
+        return assignmentResponse.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public ResponseEntity<AssignmentResponse> createAssignment(@RequestBody AssignmentRequest assignmentRequest) {
         AssignmentResponse savedAssignment = assignmentService.saveAssignment(assignmentRequest);
@@ -34,18 +51,6 @@ public class AssignmentController {
         return assignmentService.updateAssignment(id, assignmentRequest);
     }
 
-
-
-    @GetMapping("/{id}")
-    public ResponseEntity<AssignmentResponse> getAssignmentById(@PathVariable Long id) {
-        Optional<AssignmentResponse> assignmentResponse = assignmentService.getAssignmentById(id);
-        return assignmentResponse.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @GetMapping
-    public List<AssignmentResponse> getAllAssignments() {
-        return assignmentService.getAllAssignments();
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAssignment(@PathVariable Long id) {
