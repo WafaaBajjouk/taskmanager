@@ -10,6 +10,8 @@ public class ProjectRequest {
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
+    private Boolean isCompleted;
+    private int progress;
 
     public String getProjectName() {
         return projectName;
@@ -41,5 +43,21 @@ public class ProjectRequest {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public Boolean getCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(Boolean completed) {
+        isCompleted = completed;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 }

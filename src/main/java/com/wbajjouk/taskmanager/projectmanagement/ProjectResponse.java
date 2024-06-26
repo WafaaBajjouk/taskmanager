@@ -11,6 +11,8 @@ public class ProjectResponse {
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
+    private boolean isCompleted;
+    private int progress;
 
     public Long getProjectId() {
         return projectId;
@@ -50,5 +52,21 @@ public class ProjectResponse {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 }

@@ -22,15 +22,15 @@ public class ProjectController {
         return ResponseEntity.ok(savedProject);
     }
 
+    @GetMapping
+    public List<ProjectResponse> getAllProjects() {
+        return projectService.getAllProjects();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ProjectResponse> getProjectById(@PathVariable Long id) {
         Optional<ProjectResponse> projectResponse = projectService.getProjectById(id);
         return projectResponse.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @GetMapping
-    public List<ProjectResponse> getAllProjects() {
-        return projectService.getAllProjects();
     }
 
     @GetMapping("/completed")
@@ -38,11 +38,20 @@ public class ProjectController {
         return projectService.getCompletedProjects();
     }
 
-
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
         projectService.deleteProject(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProjectResponse> updateProject(@PathVariable Long id, @RequestBody ProjectRequest projectRequest) {
+        return projectService.updateProject(id,projectRequest);
+    }
+
+    @PutMapping("/completed/{id}")
+    public ResponseEntity<ProjectResponse> markCompletedProject(@PathVariable Long id) {
+        return projectService.maskAsCompleted(id);
+
     }
 }

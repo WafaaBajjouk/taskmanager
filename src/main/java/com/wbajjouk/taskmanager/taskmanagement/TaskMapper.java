@@ -12,7 +12,7 @@ import org.mapstruct.factory.Mappers;
 public interface TaskMapper {
 
 
-    @Mapping(source = "project.projectId", target = "project_id")
+    @Mapping(source = "project.id", target = "project_id")
     TaskResponse taskToTaskResponse(Task task);
 
     Task taskRequestToTask(TaskRequest taskRequest);

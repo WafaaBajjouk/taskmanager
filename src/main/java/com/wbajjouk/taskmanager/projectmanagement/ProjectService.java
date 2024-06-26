@@ -1,50 +1,22 @@
 package com.wbajjouk.taskmanager.projectmanagement;
 
-import com.wbajjouk.taskmanager.usermanagement.User;
-import com.wbajjouk.taskmanager.usermanagement.UserMapper;
-import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-@Transactional
-@Service
-public class ProjectService {
+public interface ProjectService {
+    ProjectResponse saveProject(ProjectRequest projectRequest);
 
-    private final ProjectRepository projectRepository;
-    private final ProjectMapper projectmapper = Mappers.getMapper(ProjectMapper.class);
+    Optional<ProjectResponse> getProjectById(Long id);
 
-    @Autowired
-    public ProjectService(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
-    }
+    List<ProjectResponse> getAllProjects();
 
-    public ProjectResponse saveProject(ProjectRequest projectRequest) {
-        Project project = projectmapper.projectRequestToProject(projectRequest);
-        Project savedProject = projectRepository.save(project);
-        return projectmapper.projectToProjectResponse(savedProject);
-    }
+    void deleteProject(Long id);
 
-    public Optional<ProjectResponse> getProjectById(Long id) {
-        return projectRepository.findById(id).map(projectmapper::projectToProjectResponse);
-    }
+    List<ProjectResponse> getCompletedProjects();
 
-    public List<ProjectResponse> getAllProjects() {
-        return projectRepository.findAll().stream().map(projectmapper::projectToProjectResponse).collect(Collectors.toList());
-    }
+    ResponseEntity<ProjectResponse> updateProject(Long id, ProjectRequest projectRequest);
 
-    public void deleteProject(Long id) {
-        projectRepository.deleteById(id);
-    }
-
-    public List<ProjectResponse> getCompletedProjects() {
-        return projectRepository.findByProjectCompleteTrue().stream()
-                .map(projectmapper::projectToProjectResponse).collect(Collectors.toList());
-    }
-
-
+    ResponseEntity<ProjectResponse> maskAsCompleted(Long id);
 }

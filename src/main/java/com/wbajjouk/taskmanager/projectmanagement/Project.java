@@ -13,7 +13,7 @@ Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "project_id")
-    private Long projectId;
+    private Long id;
 
     @Column(name = "project_name", nullable = false)
     private String projectName;
@@ -28,33 +28,34 @@ Project {
     private LocalDate endDate;
 
     @Column(name = "project_complete")
-    private boolean projectComplete;
+    private boolean isCompleted;
 
     @Column(name = "project_progress_percent")
-    private int project_progress;
-
-
+    private int progress;
 
     // Constructors, getters, and setters
 
-    public Project() {
-    }
 
-    public Project(String projectName, String description, LocalDate startDate, LocalDate endDate,boolean projectComplete, int project_progress) {
+    public Project(Long id, String projectName, String description, LocalDate startDate, LocalDate endDate, boolean isCompleted, int progress) {
+        this.id = id;
         this.projectName = projectName;
-        this.projectComplete=projectComplete;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.project_progress=project_progress;
+        this.isCompleted = isCompleted;
+        this.progress = progress;
     }
 
-    public Long getProjectId() {
-        return projectId;
+    public Project() {
+
     }
 
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getProjectName() {
@@ -89,20 +90,20 @@ Project {
         this.endDate = endDate;
     }
 
-    public boolean isProjectComplete() {
-        return projectComplete;
+    public boolean isCompleted() {
+        return isCompleted;
     }
 
-    public void setProjectComplete(boolean projectComplete) {
-        this.projectComplete = projectComplete;
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
     }
 
-    public int getProject_progress() {
-        return project_progress;
+    public int getProgress() {
+        return progress;
     }
 
-    public void setProject_progress(int project_progress) {
-        this.project_progress = project_progress;
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 
     public Duration calculateRemainingTime() {
