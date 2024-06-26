@@ -1,12 +1,10 @@
 package com.wbajjouk.taskmanager.projectmanagement;
 
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.util.Date;
 
 public class ProjectResponse {
 
-    private Long projectId;
+    private Long id;
     private String projectName;
     private String description;
     private LocalDate startDate;
@@ -14,12 +12,12 @@ public class ProjectResponse {
     private boolean isCompleted;
     private int progress;
 
-    public Long getProjectId() {
-        return projectId;
+    public Long getId() {
+        return id;
     }
 
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getProjectName() {

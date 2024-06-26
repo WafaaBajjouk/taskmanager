@@ -43,16 +43,16 @@ public class TaskController {
     //GET TASK BY PROJECT ID
     @GetMapping("/project/{projectId}")
     public ResponseEntity<List<TaskResponse>> getTasksbyProjectId( @PathVariable long projectId) {
-        Optional<List<TaskResponse>> taskResponse = taskService.getTasksByProjectId(projectId);
-        return taskResponse.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
+     List<TaskResponse> taskResponse = taskService.getTasksByProjectId(projectId);
+        return ResponseEntity.ok(taskResponse);
     }
 
 
     //Get Only completed Task of a project X
     @GetMapping("/completedTask/project/{id}")
     public ResponseEntity<List<TaskResponse>> getCompletedTasksByProjectId(@PathVariable long id) {
-            Optional<List<TaskResponse>> taskResponse = taskService.getCompletedTasksByProjectId(id);
-            return taskResponse.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
+           List<TaskResponse> taskResponse = taskService.getCompletedTasksByProjectId(id);
+            return ResponseEntity.ok(taskResponse);
     }
 
 

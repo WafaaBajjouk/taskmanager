@@ -2,7 +2,6 @@ package com.wbajjouk.taskmanager.taskmanagement;
 
 import com.wbajjouk.taskmanager.projectmanagement.Project;
 import com.wbajjouk.taskmanager.projectmanagement.ProjectRepository;
-import com.wbajjouk.taskmanager.usermanagement.User;
 import com.wbajjouk.taskmanager.usermanagement.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.mapstruct.factory.Mappers;
@@ -62,10 +61,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Optional<List<TaskResponse>> getTasksByProjectId(long projectId) {
+    public List<TaskResponse> getTasksByProjectId(long projectId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new EntityNotFoundException("Project not found"));
-        return Optional.of(taskRepository.findByProject(project).stream().map(mapper::taskToTaskResponse).collect(Collectors.toList()));
+        return taskRepository.findByProject(project).stream().map(mapper::taskToTaskResponse).collect(Collectors.toList());
     }
 
 
@@ -88,15 +87,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Optional<List<TaskResponse>> getCompletedTasksByProjectId(long id) {
+    public List<TaskResponse> getCompletedTasksByProjectId(long id) {
         List<Task> tasks = taskRepository.findByProjectIdAndStatus(id, "completed");
-        if (tasks.isEmpty()) {
-            return Optional.empty();
-        }
         List<TaskResponse> taskResponses = tasks.stream()
                 .map(task -> new TaskResponse(task.getTaskId(), task.getTaskName(), task.getDescription(), task.getDueDate(), task.getStatus(), task.getPriority()))
                 .collect(Collectors.toList());
-        return Optional.of(taskResponses);
+        return taskResponses;
 
     }
 

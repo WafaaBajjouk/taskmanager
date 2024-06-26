@@ -16,11 +16,11 @@ public interface TaskService {
     void deleteTask(Long id);
 
 
-    Optional<List<TaskResponse>> getTasksByProjectId(long projectId);
+    List<TaskResponse> getTasksByProjectId(long projectId);
 
     List<TaskResponse> findTasksByStatus(String status);
 
     TaskResponse markTaskAsCompleted(long id);
 
-    Optional<List<TaskResponse>> getCompletedTasksByProjectId(long id);
+    List<TaskResponse> getCompletedTasksByProjectId(long id);
 }
