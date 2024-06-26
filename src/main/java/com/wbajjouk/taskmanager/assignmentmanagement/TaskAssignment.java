@@ -15,13 +15,13 @@ public class TaskAssignment {
     @Column(name = "assignment_id")
     private Long assignmentId;
 
-    @ManyToOne()
+    @ManyToOne
     //many assignment could be associated iwth one task
     @JoinColumn(name = "task_id", nullable = false)
     private Task task;
 
-    @ManyToOne()
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id", nullable = false )
     private User user;
 
     @Column(name = "assigned_date")

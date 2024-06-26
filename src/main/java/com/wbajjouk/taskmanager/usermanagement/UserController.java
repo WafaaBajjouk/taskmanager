@@ -36,9 +36,21 @@ public class UserController {
         return ResponseEntity.ok(savedUserResponse);
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest userrqt , @PathVariable Long id) {
+       return userService.updateUser(userrqt,id);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/role/{id}")
+    public ResponseEntity<UserResponse> assignRoleToUser(@PathVariable Long id, @RequestBody String role) {
+            return userService.assignRole(id,role);
+    }
+
+
 }

@@ -2,6 +2,8 @@ package com.wbajjouk.taskmanager.taskmanagement;
 
 import com.wbajjouk.taskmanager.projectmanagement.Project;
 import com.wbajjouk.taskmanager.projectmanagement.ProjectRepository;
+import com.wbajjouk.taskmanager.usermanagement.User;
+import com.wbajjouk.taskmanager.usermanagement.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +22,13 @@ public class TaskServiceImpl implements TaskService {
     private final ProjectRepository projectRepository;
 
     private final TaskMapper mapper = Mappers.getMapper(TaskMapper.class);
+    private final UserRepository userRepository;
 
     @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository, ProjectRepository projectRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository, ProjectRepository projectRepository, UserRepository userRepository) {
         this.taskRepository = taskRepository;
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
 
     // Open transaction and jpa session
@@ -64,6 +68,8 @@ public class TaskServiceImpl implements TaskService {
         return Optional.of(taskRepository.findByProject(project).stream().map(mapper::taskToTaskResponse).collect(Collectors.toList()));
     }
 
+
+
     @Override
     public List<TaskResponse> findTasksByStatus(String status) {
         return taskRepository.findByStatus(status).stream()
@@ -80,6 +86,7 @@ public class TaskServiceImpl implements TaskService {
         Task savedTask = taskRepository.save(task);
         return mapper.taskToTaskResponse(savedTask);
     }
+
 
     @Override
     public void deleteTask(Long id) {

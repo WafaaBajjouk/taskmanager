@@ -1,41 +1,20 @@
 package com.wbajjouk.taskmanager.usermanagement;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
 
-@Transactional
-@Service
-public class UserService {
-//    Note : INSTEAD OF AUTOWIRED THe OBJ , CONSTRUCTION DEPENDICIES IS BETTER .
+public interface UserService {
+    List<UserResponse> getAllUsers();
 
-    private final UserRepository userRepository;
-    private final UserMapper userMapper = UserMapper.INSTANCE;
+    Optional<UserResponse> getUserById(Long id);
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    UserResponse saveUser(UserRequest userRqt);
 
-    public List<UserResponse> getAllUsers() {
-        return userRepository.findAll().stream().map(userMapper::userToUserResponse).toList();
-    }
+    void deleteUser(Long id);
 
-    public Optional<UserResponse> getUserById(Long id) {
-        Optional<User> user = userRepository.findById(id);//represent a value that may be absent.
-        // to avoid NullPointerException and allows  to express the fact that a return value might be missing.
-        return user.map(userMapper::userToUserResponse);
-    }
+    ResponseEntity<UserResponse> updateUser(UserRequest userrqt, Long id);
 
-    public UserResponse saveUser(UserRequest userRqt) {
-        User user = userMapper.userResponseToUser(userRqt);
-        User savedUser = userRepository.save(user);
-        return userMapper.userToUserResponse(savedUser);
-    }
-
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
-    }
+    ResponseEntity<UserResponse> assignRole(Long id, String role);
 }
-

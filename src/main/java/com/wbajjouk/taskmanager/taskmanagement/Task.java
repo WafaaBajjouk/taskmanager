@@ -30,7 +30,7 @@ public class Task {
     private String priority ;
 
     // many instances task can be associated with one instance of the Project entity.
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
