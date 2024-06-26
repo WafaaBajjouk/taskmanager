@@ -87,6 +87,19 @@ public class TaskServiceImpl implements TaskService {
         return mapper.taskToTaskResponse(savedTask);
     }
 
+    @Override
+    public Optional<List<TaskResponse>> getCompletedTasksByProjectId(long id) {
+        List<Task> tasks = taskRepository.findByProjectIdAndStatus(id, "completed");
+        if (tasks.isEmpty()) {
+            return Optional.empty();
+        }
+        List<TaskResponse> taskResponses = tasks.stream()
+                .map(task -> new TaskResponse(task.getTaskId(), task.getTaskName(), task.getDescription(), task.getDueDate(), task.getStatus(), task.getPriority()))
+                .collect(Collectors.toList());
+        return Optional.of(taskResponses);
+
+    }
+
 
     @Override
     public void deleteTask(Long id) {

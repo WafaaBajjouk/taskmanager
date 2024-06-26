@@ -44,6 +44,7 @@ Project {
         this.endDate = endDate;
         this.isCompleted = isCompleted;
         this.progress = progress;
+
     }
 
     public Project() {

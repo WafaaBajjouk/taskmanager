@@ -21,4 +21,6 @@ public interface TaskService {
     List<TaskResponse> findTasksByStatus(String status);
 
     TaskResponse markTaskAsCompleted(long id);
+
+    Optional<List<TaskResponse>> getCompletedTasksByProjectId(long id);
 }

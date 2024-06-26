@@ -13,6 +13,16 @@ public class TaskResponse {
     private String priority;
     private int project_id;
 
+    public TaskResponse(Long taskId, String taskName, String description, Date dueDate, String status, String priority) {
+        this.taskId = taskId;
+        this.taskName = taskName;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.status = status;
+        this.priority = priority;
+
+    }
+
 
     public Long getTaskId() {
         return taskId;
