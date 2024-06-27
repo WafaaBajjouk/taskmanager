@@ -1,9 +1,40 @@
 package com.wbajjouk.taskmanager.usermanagement;
 
 public class UserRequest {
-    public String username;
-    public String email;
-    public String role;
-    public String passwordHash;
+    private String username;
+    private String email;
+    private String role;
+    private String passwordHash;
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
 }

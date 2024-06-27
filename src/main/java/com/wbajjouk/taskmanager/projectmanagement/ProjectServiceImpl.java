@@ -1,11 +1,7 @@
 package com.wbajjouk.taskmanager.projectmanagement;
 
-import com.wbajjouk.taskmanager.taskmanagement.Task;
 import com.wbajjouk.taskmanager.taskmanagement.TaskRepository;
-import com.wbajjouk.taskmanager.taskmanagement.TaskResponse;
 import com.wbajjouk.taskmanager.taskmanagement.TaskService;
-import jakarta.annotation.PostConstruct;
-import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +31,9 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     // set the progress value = avg of completed task within the project
-    @Scheduled(fixedDelay = 30000)
-    public void initializeProgress() {
+    @Scheduled(fixedDelayString = "${progress.updateInterval}")
+    public synchronized void updateProgressForAllProjects() {
+        System.out.println("Yay, updating progress");
         List<Project> projects = projectRepository.findAll();
         for (Project project : projects) {
             int progress = calculateProjectProgress(project.getId());
@@ -60,6 +57,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectResponse saveProject(ProjectRequest projectRequest) {
         Project project = projectmapper.projectRequestToProject(projectRequest);
         Project savedProject = projectRepository.save(project);
+//        this.initializeProgress();
         return projectmapper.projectToProjectResponse(savedProject);
     }
 
@@ -69,7 +67,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Optional<ProjectResponse> getProjectById(Long id) {
+    public Optional<ProjectResponse> getProjectById(long id) {
         return projectRepository.findById(id).map(projectmapper::projectToProjectResponse);
     }
 
@@ -131,21 +129,21 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ResponseEntity<ProjectResponse> updateProject(Long id, ProjectRequest projectRequest) {
+    public ProjectResponse updateProject(long id, ProjectRequest projectRequest) {
             Project project = projectmapper.projectRequestToProject(projectRequest);
             project.setId(id);
             Project updatedProject = projectRepository.save(project);
-            return ResponseEntity.ok(projectmapper.projectToProjectResponse(updatedProject));
+            return projectmapper.projectToProjectResponse(updatedProject);
     }
 
     @Override
-    public ResponseEntity<ProjectResponse> maskAsCompleted(Long id) {
+    public ProjectResponse maskAsCompleted(Long id) {
         Project project = projectRepository.findById(id)
                                               .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         project.setCompleted(true);
         projectRepository.save(project);
-        return ResponseEntity.ok(projectmapper.projectToProjectResponse(project));
+        return projectmapper.projectToProjectResponse(project);
 
     }
 

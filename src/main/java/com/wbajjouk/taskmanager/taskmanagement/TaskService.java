@@ -23,4 +23,6 @@ public interface TaskService {
     TaskResponse markTaskAsCompleted(long id);
 
     List<TaskResponse> getCompletedTasksByProjectId(long id);
+
+    TaskResponse updateTask(Long id, TaskRequest request);
 }

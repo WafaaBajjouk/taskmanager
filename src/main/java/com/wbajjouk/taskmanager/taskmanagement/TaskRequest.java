@@ -1,24 +1,16 @@
 package com.wbajjouk.taskmanager.taskmanagement;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class TaskRequest {
 
     private String taskName;
     private String description;
-    private Date dueDate;
+    private LocalDate dueDate;
     private String status ;
     private String priority ;
-    private int project_id;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    private long projectId;
 
     public String getTaskName() {
         return taskName;
@@ -36,12 +28,20 @@ public class TaskRequest {
         this.description = description;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getPriority() {
@@ -52,11 +52,11 @@ public class TaskRequest {
         this.priority = priority;
     }
 
-    public long getProject_id() {
-        return project_id;
+    public long getProjectId() {
+        return projectId;
     }
 
-    public void setProject_id(int project_id) {
-        this.project_id = project_id;
+    public void setProjectId(long projectId) {
+        this.projectId = projectId;
     }
 }

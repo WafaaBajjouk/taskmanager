@@ -11,18 +11,17 @@ public class TaskResponse {
     private Date dueDate;
     private String status;
     private String priority;
-    private int project_id;
+    private long projectId;
 
-    public TaskResponse(Long taskId, String taskName, String description, Date dueDate, String status, String priority) {
+    public TaskResponse(Long taskId, String taskName, String description, Date dueDate, String status, String priority, long projectId) {
         this.taskId = taskId;
         this.taskName = taskName;
         this.description = description;
         this.dueDate = dueDate;
         this.status = status;
         this.priority = priority;
-
+        this.projectId = projectId;
     }
-
 
     public Long getTaskId() {
         return taskId;
@@ -72,11 +71,11 @@ public class TaskResponse {
         this.priority = priority;
     }
 
-    public int getProject_id() {
-        return project_id;
+    public long getProjectId() {
+        return projectId;
     }
 
-    public void setProject_id(int project_id) {
-        this.project_id = project_id;
+    public void setProjectId(long projectId) {
+        this.projectId = projectId;
     }
 }

@@ -1,14 +1,14 @@
 package com.wbajjouk.taskmanager.projectmanagement;
 
-import org.springframework.http.ResponseEntity;
-
 import java.util.List;
 import java.util.Optional;
 
 public interface ProjectService {
+    void updateProgressForAllProjects();
+
     ProjectResponse saveProject(ProjectRequest projectRequest);
 
-    Optional<ProjectResponse> getProjectById(Long id);
+    Optional<ProjectResponse> getProjectById(long id);
 
     List<ProjectResponse> getAllProjects();
 
@@ -16,7 +16,7 @@ public interface ProjectService {
 
     List<ProjectResponse> getCompletedProjects();
 
-    ResponseEntity<ProjectResponse> updateProject(Long id, ProjectRequest projectRequest);
+    ProjectResponse updateProject(long id, ProjectRequest projectRequest);
 
-    ResponseEntity<ProjectResponse> maskAsCompleted(Long id);
+    ProjectResponse maskAsCompleted(Long id);
 }

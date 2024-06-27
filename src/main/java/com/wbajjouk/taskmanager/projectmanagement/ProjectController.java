@@ -46,12 +46,12 @@ public class ProjectController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ProjectResponse> updateProject(@PathVariable Long id, @RequestBody ProjectRequest projectRequest) {
-        return projectService.updateProject(id,projectRequest);
+        return ResponseEntity.ok(projectService.updateProject(id,projectRequest));
     }
 
     @PutMapping("/completed/{id}")
     public ResponseEntity<ProjectResponse> markCompletedProject(@PathVariable Long id) {
-        return projectService.maskAsCompleted(id);
+        return ResponseEntity.ok(projectService.maskAsCompleted(id));
 
     }
 }

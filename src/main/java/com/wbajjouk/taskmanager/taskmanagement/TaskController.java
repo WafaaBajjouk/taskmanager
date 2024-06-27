@@ -65,7 +65,7 @@ public class TaskController {
 
 
     //Mark a Task As Completed
-    @PutMapping("/{id}")
+    @PutMapping("/markCompleted/{id}")
     public TaskResponse markAsCompleted(@PathVariable long id) {
         return taskService.markTaskAsCompleted(id);
 
@@ -77,5 +77,10 @@ public class TaskController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<TaskResponse> updateTask(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
+        taskService.updateTask(id,taskRequest);
+        return ResponseEntity.ok().build();
+    }
 
 }
