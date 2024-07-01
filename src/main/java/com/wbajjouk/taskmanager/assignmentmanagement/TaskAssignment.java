@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Task_Assignments")
-public class TaskAssignment {
+public class    TaskAssignment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

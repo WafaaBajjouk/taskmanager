@@ -1,5 +1,7 @@
 package com.wbajjouk.taskmanager.assignmentmanagement;
 
+import com.wbajjouk.taskmanager.taskmanagement.Task;
+import com.wbajjouk.taskmanager.taskmanagement.TaskRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -12,6 +14,9 @@ public interface AssignmentMapper {
 
     AssignmentResponse assignmentToAssignmentResponse(TaskAssignment assignment);
     TaskAssignment assignmentRequestToAssignment(AssignmentRequest assignmentRequest);
+
+    void  assignmentRequestToAssignment(AssignmentRequest assignmentRequest, @MappingTarget TaskAssignment taskAssignment);
+
 
     //@Mapping(source=".", target = "residence")
    // AssignmentController.PersonResponse personToPersonResponse(AssignmentController.Person person);

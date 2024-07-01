@@ -54,18 +54,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<UserResponse> updateUser(UserRequest userrqt, Long id) {
-        User user = userMapper.userRequestToUser(userrqt);
-        user.setUserId(id);
-        User savedUser = userRepository.save(user);
-        return ResponseEntity.ok(userMapper.userToUserResponse(savedUser));
+    public UserResponse updateUser(UserRequest userrqt, Long id) {
+//        User user = userMapper.userRequestToUser(userrqt);
+//        user.setUserId(id);
+//        User savedUser = userRepository.save(user);
+//        return userMapper.userToUserResponse(savedUser);
+
+        User user = userRepository.findById(id).orElseThrow();
+        userMapper.userRequestToUser(userrqt,user);
+        return userMapper.userToUserResponse(user);
+
+
     }
 
     @Override
-    public ResponseEntity<UserResponse> assignRole(Long id, String role) {
+    public UserResponse assignRole(Long id, String role) {
         User user= userRepository.findById(id).orElseThrow(() -> new IllegalStateException("User not found"));
         user.setRole(role);
-        return ResponseEntity.ok(userMapper.userToUserResponse(userRepository.save(user)));
+        return userMapper.userToUserResponse(userRepository.save(user));
     }
 }
 

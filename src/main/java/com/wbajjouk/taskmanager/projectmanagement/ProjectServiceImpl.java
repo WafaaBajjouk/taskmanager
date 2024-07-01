@@ -38,9 +38,17 @@ public class ProjectServiceImpl implements ProjectService {
         for (Project project : projects) {
             int progress = calculateProjectProgress(project.getId());
             project.setProgress(progress);
+            if(progress == 100) {
+                System.out.println("Project progress 100% with Id " + project.getId()+ " ans setted as completed "  );
+                maskAsCompleted(project.getId());
+
+                //If the scheduled task runs outside of a transaction management context, there might be issues with data consistency.
+                //if the application crashes in the middle of the task, some projects might not be updated correctly.
+            }
             // unnecessary within the transaction
             // projectRepository.save(project);
         }
+
     }
 
     private int calculateProjectProgress(long projectId) {

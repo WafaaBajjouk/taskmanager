@@ -14,7 +14,7 @@ public interface UserService {
 
     void deleteUser(Long id);
 
-    ResponseEntity<UserResponse> updateUser(UserRequest userrqt, Long id);
+    UserResponse updateUser(UserRequest userrqt, Long id);
 
-    ResponseEntity<UserResponse> assignRole(Long id, String role);
+    UserResponse assignRole(Long id, String role);
 }

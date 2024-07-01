@@ -62,13 +62,9 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     public AssignmentResponse updateAssignment(long id, AssignmentRequest assignmentRequest) {
-
-        TaskAssignment assignment = mapper.assignmentRequestToAssignment(assignmentRequest);
-        assignment.setAssignmentId(id);
-        TaskAssignment entity = assignmentRepository.save(assignment);
-
-        return mapper.assignmentToAssignmentResponse(entity);
-
+        TaskAssignment assignment = assignmentRepository.findById(id).orElseThrow();
+        mapper.assignmentRequestToAssignment(assignmentRequest,assignment);
+        return mapper.assignmentToAssignmentResponse(assignment);
     }
 
     @Override

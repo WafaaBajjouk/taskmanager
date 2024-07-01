@@ -38,7 +38,8 @@ public class UserController {
 
     @PutMapping("{id}")
     public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest userrqt , @PathVariable Long id) {
-       return userService.updateUser(userrqt,id);
+        UserResponse updatedUserResponse = userService.updateUser(userrqt, id);
+                return ResponseEntity.ok(updatedUserResponse);
     }
 
     @DeleteMapping("/{id}")
@@ -49,7 +50,8 @@ public class UserController {
 
     @PutMapping("/role/{id}")
     public ResponseEntity<UserResponse> assignRoleToUser(@PathVariable Long id, @RequestBody String role) {
-            return userService.assignRole(id,role);
+           UserResponse assigned = userService.assignRole(id,role);
+           return ResponseEntity.ok(assigned);
     }
 
 

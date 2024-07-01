@@ -110,6 +110,39 @@ public class ProjectTest {
 
     }
 
+
+    @Test
+    public void testDeleteProject() {
+        ProjectRequest request = new ProjectRequest();
+        request.setCompleted(false);
+        request.setDescription("Delete Test Project");
+        request.setStartDate(LocalDate.EPOCH);
+        request.setEndDate(LocalDate.EPOCH);
+        request.setProjectName("Delete Test Project");
+        ProjectResponse project = projectService.saveProject(request);
+
+        projectService.deleteProject(project.getId());
+
+        Optional<ProjectResponse> deletedProject = projectService.getProjectById(project.getId());
+        Assert.assertFalse(deletedProject.isPresent());
+    }
+
+
+
+    @Test
+    public void testMaskAsCompleted() {
+        ProjectRequest request = new ProjectRequest();
+        request.setCompleted(false);
+        request.setDescription("Incomplete Project");
+        request.setStartDate(LocalDate.EPOCH);
+        request.setEndDate(LocalDate.EPOCH);
+        request.setProjectName("Incomplete Project");
+        ProjectResponse project = projectService.saveProject(request);
+
+        ProjectResponse completedProject = projectService.maskAsCompleted(project.getId());
+
+        Assert.assertTrue(completedProject.isCompleted());
+    }
 //    notes:
 //    keep test independent from the rest of your tests
 //    go over specification

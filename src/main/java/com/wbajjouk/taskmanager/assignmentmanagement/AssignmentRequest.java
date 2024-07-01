@@ -1,14 +1,22 @@
 package com.wbajjouk.taskmanager.assignmentmanagement;
 
-import com.wbajjouk.taskmanager.taskmanagement.TaskResponse;
-import com.wbajjouk.taskmanager.usermanagement.UserResponse;
-
+import java.time.LocalDate;
 import java.util.Date;
 
 public class AssignmentRequest {
     private Long userId;
     private Long taskId;
-    private Date assignedDate;
+    private LocalDate assignedDate;
+
+    public AssignmentRequest(Long userId, Long taskId, LocalDate assignedDate) {
+        this.userId = userId;
+        this.taskId = taskId;
+        this.assignedDate = assignedDate;
+    }
+
+    public AssignmentRequest() {
+
+    }
 
     public Long getTaskId() {
         return taskId;
@@ -26,11 +34,11 @@ public class AssignmentRequest {
         this.userId = userId;
     }
 
-    public Date getAssignedDate() {
+    public LocalDate getAssignedDate() {
         return assignedDate;
     }
 
-    public void setAssignedDate(Date assignedDate) {
+    public void setAssignedDate(LocalDate assignedDate) {
         this.assignedDate = assignedDate;
     }
 }

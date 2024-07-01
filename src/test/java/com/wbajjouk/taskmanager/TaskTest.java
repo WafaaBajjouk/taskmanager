@@ -4,6 +4,7 @@ package com.wbajjouk.taskmanager;
 import com.wbajjouk.taskmanager.projectmanagement.ProjectRequest;
 import com.wbajjouk.taskmanager.projectmanagement.ProjectResponse;
 import com.wbajjouk.taskmanager.projectmanagement.ProjectService;
+import com.wbajjouk.taskmanager.taskmanagement.TaskRepository;
 import com.wbajjouk.taskmanager.taskmanagement.TaskRequest;
 import com.wbajjouk.taskmanager.taskmanagement.TaskResponse;
 import com.wbajjouk.taskmanager.taskmanagement.TaskService;
@@ -23,6 +24,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.verify;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
@@ -37,6 +42,12 @@ public class TaskTest {
     @Autowired
     private ProjectService projectService;
 
+    private ProjectResponse sampleProject;
+
+    @Before
+    public void setup() {
+        sampleProject = createSampleProject();
+    }
     @Test
     public void testSaveTask(){
 
@@ -106,6 +117,86 @@ public class TaskTest {
         Assert.assertEquals("updated", updatedTask.getTaskName());
 
     }
+
+
+    @Test
+    public void testDeleteTask() {
+        ProjectResponse sampleProject = createSampleProject();
+
+        TaskRequest requestTask = new TaskRequest();
+        requestTask.setTaskName("test");
+        requestTask.setDescription("Description Test");
+        requestTask.setPriority("urgent");
+        requestTask.setStatus("to-do");
+        requestTask.setProjectId(sampleProject.getId());
+        TaskResponse task = taskService.saveTask(requestTask);
+
+        taskService.deleteTask(task.getTaskId());
+        //  verify(taskRepository).deleteById(task.getTaskId()); BUT IAM NOT USING MOCKS
+
+        //  retrieve the deleted task ----> should be Optional.empty!!!!
+        Optional<TaskResponse> deletedTask = taskService.getTaskById(task.getTaskId());
+        assertFalse(deletedTask.isPresent());
+    }
+
+    @Test
+    public void testGetTasksByProjectId() {
+        TaskRequest requestTask1 = new TaskRequest();
+        requestTask1.setTaskName("task1");
+        requestTask1.setDescription("Description Test 1");
+        requestTask1.setPriority("urgent");
+        requestTask1.setStatus("to-do");
+        requestTask1.setProjectId(sampleProject.getId());
+        taskService.saveTask(requestTask1);
+
+        TaskRequest requestTask2 = new TaskRequest();
+        requestTask2.setTaskName("task2");
+        requestTask2.setDescription("Description Test 2");
+        requestTask2.setPriority("trivial");
+        requestTask2.setStatus("to-do");
+        requestTask2.setProjectId(sampleProject.getId());
+        taskService.saveTask(requestTask2);
+
+        List<TaskResponse> tasks = taskService.getTasksByProjectId(sampleProject.getId());
+
+        Assert.assertNotNull(tasks);
+        Assert.assertEquals(2, tasks.size());
+
+        Assert.assertTrue(tasks.stream().anyMatch(t -> t.getTaskName().equals("task1")));
+        Assert.assertTrue(tasks.stream().anyMatch(t -> t.getTaskName().equals("task2")));
+    }
+
+    @Test
+    public void testGetCompletedTasksByProjectId() {
+        ProjectResponse sampleProject = createSampleProject();
+
+        // save multiple tasks for the created project
+        TaskRequest requestTask1 = new TaskRequest();
+        requestTask1.setTaskName("task1");
+        requestTask1.setDescription("Description Test 1");
+        requestTask1.setPriority("urgent");
+        requestTask1.setStatus("to-do");
+        requestTask1.setProjectId(sampleProject.getId());
+        TaskResponse task1 = taskService.saveTask(requestTask1);
+
+        TaskRequest requestTask2 = new TaskRequest();
+        requestTask2.setTaskName("task2");
+        requestTask2.setDescription("Description Test 2");
+        requestTask2.setPriority("urgent");
+        requestTask2.setStatus("to-do");
+        requestTask2.setProjectId(sampleProject.getId());
+        TaskResponse task2 = taskService.saveTask(requestTask2);
+
+        // Mark one task as completed
+        taskService.markTaskAsCompleted(task1.getTaskId());
+
+        List<TaskResponse> completedTasks = taskService.getCompletedTasksByProjectId(sampleProject.getId());
+
+        Assert.assertNotNull(completedTasks);
+        Assert.assertEquals(1, completedTasks.size());
+        Assert.assertTrue(completedTasks.stream().anyMatch(t -> t.getTaskName().equals("task1")));
+    }
+
 
 
 }
