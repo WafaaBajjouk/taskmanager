@@ -33,7 +33,7 @@ public class TaskServiceImpl implements TaskService {
     // Open transaction and jpa session
     @Override
     public TaskResponse saveTask(TaskRequest taskRequest) {
-        Project project = projectRepository.findById(taskRequest.getProjectId())
+        Project project = projectRepository.findById(taskRequest.projectId)
                 .orElseThrow(() -> new EntityNotFoundException("Project not found"));
         Task task = mapper.taskRequestToTask(taskRequest);
         task.setProject(project);

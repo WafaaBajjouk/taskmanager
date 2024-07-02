@@ -36,10 +36,10 @@ public class AssignmentServiceImpl implements AssignmentService {
     public AssignmentResponse saveAssignment(AssignmentRequest assignmentRequest) {
         TaskAssignment assignment = mapper.assignmentRequestToAssignment(assignmentRequest);
 
-        Task task = taskRepository.findById(assignmentRequest.getTaskId())
+        Task task = taskRepository.findById(assignmentRequest.taskId)
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
 
-        User user = userRepository.findById(assignmentRequest.getUserId())
+        User user = userRepository.findById(assignmentRequest.userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         assignment.setTask(task);

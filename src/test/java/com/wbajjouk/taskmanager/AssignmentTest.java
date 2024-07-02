@@ -36,7 +36,7 @@ import java.time.LocalDate;
 public class AssignmentTest {
 
     @Autowired
-    AssignmentService  assignmentService;
+    AssignmentService assignmentService;
     @Autowired
     UserService userService;
     @Autowired
@@ -46,51 +46,49 @@ public class AssignmentTest {
 
     @Test
     public void testAssignmentUpdate() {
-        AssignmentRequest request = new AssignmentRequest();
         UserResponse user = createSampleUser();
         TaskResponse task = createSampleTask();
 
-        request.setAssignedDate(LocalDate.EPOCH);
-        request.setUserId(user.userId);
-        request.setTaskId(task.getTaskId());
+        AssignmentRequest request = new AssignmentRequest();
+        request.assignedDate = LocalDate.EPOCH;
+        request.userId = user.userId;
+        request.taskId = task.taskId;
         AssignmentResponse assignment = assignmentService.saveAssignment(request);
 
-        request.setAssignedDate(LocalDate.now());
-
-
-        AssignmentResponse response = assignmentService.updateAssignment(assignment.getAssignmentId(), request);
-        Assert.assertEquals(LocalDate.now(), response.getAssignedDate());
+        LocalDate now = LocalDate.now();
+        request.assignedDate = now;
+        AssignmentResponse response = assignmentService.updateAssignment(assignment.assignmentId, request);
+        Assert.assertEquals(now, response.assignedDate);
     }
 
     private UserResponse createSampleUser() {
         UserRequest request = new UserRequest();
-        request.setUsername("Test User X");
-        request.setEmail(String.format("email%d@gmail.com", UserTest.TestUserId.nextId()));
-        request.setRole("ADMIN");
-        request.setPasswordHash("PasswordHash");
+        request.username = "Test User X";
+        request.email = String.format("email%d@gmail.com", UserTest.TestUserId.nextId());
+        request.role = "ADMIN";
+        request.passwordHash = "PasswordHash";
         return userService.saveUser(request);
     }
 
-
     private TaskResponse createSampleTask() {
         TaskRequest requestTask = new TaskRequest();
-        requestTask.setTaskName("test");
-        requestTask.setDescription("Description Test");
-        requestTask.setPriority("urgent");
-        requestTask.setStatus("to-do");
+        requestTask.taskName = "test";
+        requestTask.description = "Description Test";
+        requestTask.priority = "urgent";
+        requestTask.status = "to-do";
 
         ProjectResponse project = createSampleProject();
-        requestTask.setProjectId(project.getId());
+        requestTask.projectId = project.id;
         return taskService.saveTask(requestTask);
     }
 
     private ProjectResponse createSampleProject() {
         ProjectRequest requestProject = new ProjectRequest();
-        requestProject.setCompleted(false);
-        requestProject.setDescription("My test project");
-        requestProject.setStartDate(LocalDate.EPOCH);
-        requestProject.setEndDate(LocalDate.EPOCH);
-        requestProject.setProjectName("Test Project #3");
+        requestProject.isCompleted= false;
+        requestProject.description = "My test project";
+        requestProject.startDate = LocalDate.EPOCH;
+        requestProject.endDate = LocalDate.EPOCH;
+        requestProject.projectName = "Test Project #3";
         return projectService.saveProject(requestProject);
     }
 
@@ -100,16 +98,14 @@ public class AssignmentTest {
         TaskResponse task = createSampleTask();
 
         AssignmentRequest request = new AssignmentRequest();
-        request.setAssignedDate(LocalDate.EPOCH);
-        request.setUserId(user.userId);
-        request.setTaskId(task.getTaskId());
+        request.assignedDate = LocalDate.EPOCH;
+        request.userId = user.userId;
+        request.taskId = task.taskId;
         AssignmentResponse assignment = assignmentService.saveAssignment(request);
-
-        // Verify the assignment
         Assert.assertNotNull(assignment);
-        Assert.assertEquals(LocalDate.EPOCH, assignment.getAssignedDate());
-        Assert.assertEquals(user.userId, assignment.getUser().userId);
-        Assert.assertEquals(task.getTaskId(), assignment.getTask().getTaskId());
+        Assert.assertEquals(LocalDate.EPOCH, assignment.assignedDate);
+        Assert.assertEquals(user.userId, assignment.user.userId);
+        Assert.assertEquals(task.taskId, assignment.task.taskId);
     }
 
     @Test
@@ -118,19 +114,14 @@ public class AssignmentTest {
         TaskResponse task = createSampleTask();
 
         AssignmentRequest request = new AssignmentRequest();
-        request.setAssignedDate(LocalDate.EPOCH);
-        request.setUserId(user.userId);
-        request.setTaskId(task.getTaskId());
+        request.assignedDate = LocalDate.EPOCH;
+        request.userId = user.userId;
+        request.taskId = task.taskId;
 
         AssignmentResponse assignment = assignmentService.saveAssignment(request);
 
-        assignmentService.deleteAssignment(assignment.getAssignmentId());
-        Optional<AssignmentResponse> deletedAssignment = assignmentService.getAssignmentById(assignment.getAssignmentId());
+        assignmentService.deleteAssignment(assignment.assignmentId);
+        Optional<AssignmentResponse> deletedAssignment = assignmentService.getAssignmentById(assignment.assignmentId);
         Assert.assertFalse(deletedAssignment.isPresent());
-
     }
-
-
-
-
 }
