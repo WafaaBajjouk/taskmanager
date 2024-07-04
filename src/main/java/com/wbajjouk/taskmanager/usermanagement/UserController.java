@@ -1,22 +1,30 @@
 package com.wbajjouk.taskmanager.usermanagement;
 
+import jakarta.servlet.http.HttpSession;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
+
+
 public class UserController {
 
     private final UserService userService;
     private final AuthService authService;
+    private final HttpSession httpSession;
 
-    public UserController(UserService userService, AuthService authService) {
+
+    public UserController(UserService userService, AuthService authService, HttpSession httpSession) {
         this.userService = userService;
         this.authService = authService;
+        this.httpSession = httpSession;
     }
 
     @GetMapping
@@ -66,6 +74,8 @@ public class UserController {
 //        }
 //        return ResponseEntity.ok().build();
 //    }
+
+
 
 
 }

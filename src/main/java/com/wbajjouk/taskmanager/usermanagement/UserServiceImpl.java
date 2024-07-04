@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService , UserDetailsService {
     @Override
     public UserResponse saveUser(UserRequest userRqt) {
         User user = userMapper.userRequestToUser(userRqt);
+        user.setPasswordHash(passwordEncoder.encode(userRqt.passwordHash));
         User savedUser = userRepository.save(user);
         return userMapper.userToUserResponse(savedUser);
     }

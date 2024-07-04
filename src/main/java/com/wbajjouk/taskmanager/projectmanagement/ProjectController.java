@@ -1,7 +1,10 @@
 package com.wbajjouk.taskmanager.projectmanagement;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +14,23 @@ import java.util.Optional;
 public class ProjectController {
 
     private final ProjectService projectService;
+//
+//    // @Configuration
+//    // public class MyConfig {
+//    @Bean
+//    @SessionScope
+//    public MyUserPrefs myUserPrefs() {
+//        return new MyUserPrefs();
+//    }
+//    // }
+//
+//    // in a different file
+//    public static class MyUserPrefs {
+//        int volume;
+//    }
+//
+//    @Autowired
+//    public MyUserPrefs prefs;
 
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
