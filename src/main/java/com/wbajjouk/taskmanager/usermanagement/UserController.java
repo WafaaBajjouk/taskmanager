@@ -1,5 +1,6 @@
 package com.wbajjouk.taskmanager.usermanagement;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +12,11 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
+    private final AuthService authService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthService authService) {
         this.userService = userService;
+        this.authService = authService;
     }
 
     @GetMapping
@@ -53,6 +56,16 @@ public class UserController {
            UserResponse assigned = userService.assignRole(id,role);
            return ResponseEntity.ok(assigned);
     }
+//
+//    @PostMapping("/api/login")
+//    public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
+//        boolean isAuthenticated = authService.login(authRequest.username, authRequest.password);
+//
+//        if (!isAuthenticated) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//        }
+//        return ResponseEntity.ok().build();
+//    }
 
 
 }

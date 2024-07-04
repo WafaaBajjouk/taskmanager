@@ -1,19 +1,26 @@
 package com.wbajjouk.taskmanager.usermanagement;
 
 import com.wbajjouk.taskmanager.assignmentmanagement.AssignmentRepository;
-import com.wbajjouk.taskmanager.assignmentmanagement.TaskAssignment;
-import com.wbajjouk.taskmanager.taskmanagement.Task;
 import com.wbajjouk.taskmanager.taskmanagement.TaskRepository;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.userdetails.UserDetails;
+
+
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Transactional
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService , UserDetailsService {
 //    Note : INSTEAD OF AUTOWIRED THe OBJ , CONSTRUCTION DEPENDICIES IS BETTER .
 
     private final UserRepository userRepository;
@@ -21,11 +28,17 @@ public class UserServiceImpl implements UserService {
     private final TaskRepository taskRepository;
     private final AssignmentRepository assignmentRepository;
 
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     public UserServiceImpl(UserRepository userRepository, TaskRepository taskRepository, AssignmentRepository assignmentRepository) {
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
         this.assignmentRepository = assignmentRepository;
     }
+
 
     @Override
     public List<UserResponse> getAllUsers() {
@@ -55,13 +68,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse updateUser(UserRequest userrqt, Long id) {
-//        User user = userMapper.userRequestToUser(userrqt);
-//        user.setUserId(id);
-//        User savedUser = userRepository.save(user);
-//        return userMapper.userToUserResponse(savedUser);
 
         User user = userRepository.findById(id).orElseThrow();
         userMapper.userRequestToUser(userrqt,user);
+        user.setPasswordHash(passwordEncoder.encode(userrqt.passwordHash));
         return userMapper.userToUserResponse(user);
 
 
@@ -73,5 +83,22 @@ public class UserServiceImpl implements UserService {
         user.setRole(role);
         return userMapper.userToUserResponse(userRepository.save(user));
     }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getUsername())
+                .password(user.getPasswordHash())
+                .build();
+    }
+
+
 }
+
+
 

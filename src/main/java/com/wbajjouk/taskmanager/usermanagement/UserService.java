@@ -1,6 +1,8 @@
 package com.wbajjouk.taskmanager.usermanagement;
 
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,4 +19,6 @@ public interface UserService {
     UserResponse updateUser(UserRequest userrqt, Long id);
 
     UserResponse assignRole(Long id, String role);
+
+
 }
