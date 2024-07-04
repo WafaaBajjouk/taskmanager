@@ -1,9 +1,5 @@
 package com.wbajjouk.taskmanager.projectmanagement;
-
-import com.wbajjouk.taskmanager.assignmentmanagement.AssignmentRequest;
-import com.wbajjouk.taskmanager.assignmentmanagement.TaskAssignment;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 @Mapper

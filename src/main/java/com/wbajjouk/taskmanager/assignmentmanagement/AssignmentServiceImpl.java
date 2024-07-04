@@ -1,5 +1,4 @@
 package com.wbajjouk.taskmanager.assignmentmanagement;
-
 import com.wbajjouk.taskmanager.taskmanagement.Task;
 import com.wbajjouk.taskmanager.taskmanagement.TaskRepository;
 import com.wbajjouk.taskmanager.usermanagement.User;
@@ -7,7 +6,6 @@ import com.wbajjouk.taskmanager.usermanagement.UserRepository;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

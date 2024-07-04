@@ -1,10 +1,8 @@
 package com.wbajjouk.taskmanager;
 
 import com.wbajjouk.taskmanager.usermanagement.User;
-import com.wbajjouk.taskmanager.usermanagement.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,9 +27,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
-////                                .antMatchers("/api/login").permitAll()
-////                        .anyRequest().authenticated() // Ensures all requests are authenticated.
-//                        )
+
                 .httpBasic(Customizer.withDefaults())
                 .authenticationProvider(daoAuthenticationProvider);
         return http.build();

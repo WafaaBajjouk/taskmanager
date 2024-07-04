@@ -2,7 +2,6 @@ package com.wbajjouk.taskmanager.taskmanagement;
 
 import com.wbajjouk.taskmanager.projectmanagement.Project;
 import jakarta.persistence.*;
-
 import java.util.Date;
 
 @Entity

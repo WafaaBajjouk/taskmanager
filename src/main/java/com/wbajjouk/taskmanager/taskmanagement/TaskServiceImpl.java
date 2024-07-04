@@ -82,7 +82,7 @@ public class TaskServiceImpl implements TaskService {
                 .orElseThrow(() -> new EntityNotFoundException("Project not found"));
 
         task.setStatus("completed");
-//        Task savedTask = taskRepository.save(task);
+
         return mapper.taskToTaskResponse(task);
     }
 
@@ -98,10 +98,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskResponse updateTask(Long id, TaskRequest request) {
-//        Task task = mapper.taskRequestToTask(request);
-//        task.setTaskId(id);
-//        Task savedTask = taskRepository.save(task);
-//        return mapper.taskToTaskResponse(savedTask);
+
         Task task = taskRepository.findById(id).orElseThrow();
         mapper.taskRequestToTask(request, task);
         return mapper.taskToTaskResponse(task);

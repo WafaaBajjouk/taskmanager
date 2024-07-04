@@ -1,9 +1,6 @@
 package com.wbajjouk.taskmanager.projectmanagement;
-
 import jakarta.persistence.*;
-
 import java.time.*;
-import java.time.temporal.TemporalAmount;
 
 @Entity
 @Table(name = "Projects")

@@ -1,10 +1,7 @@
 package com.wbajjouk.taskmanager.assignmentmanagement;
-
 import com.wbajjouk.taskmanager.taskmanagement.TaskResponse;
 import com.wbajjouk.taskmanager.usermanagement.UserResponse;
-
 import java.time.LocalDate;
-import java.util.Date;
 
 
 public class AssignmentResponse {

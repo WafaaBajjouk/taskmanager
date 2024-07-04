@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Configuration
 @EnableJpaRepositories(basePackages = "com.wbajjouk.taskmanager") //how can I point to repositories in case of packagging by features
 @EnableScheduling

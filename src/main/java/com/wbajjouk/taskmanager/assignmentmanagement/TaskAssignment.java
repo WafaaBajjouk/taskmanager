@@ -1,9 +1,7 @@
 package com.wbajjouk.taskmanager.assignmentmanagement;
-
 import com.wbajjouk.taskmanager.usermanagement.User;
 import com.wbajjouk.taskmanager.taskmanagement.Task;
 import jakarta.persistence.*;
-
 import java.util.Date;
 
 @Entity
