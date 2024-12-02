@@ -17,10 +17,6 @@ import org.springframework.web.context.annotation.SessionScope;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-
-
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, DaoAuthenticationProvider daoAuthenticationProvider) throws Exception { // to define security rules for http request
         http
